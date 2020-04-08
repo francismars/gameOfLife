@@ -1,8 +1,9 @@
 const cellSize = 10
+const DEAD = 0
+const ALIVE = 1
 let cellGrid = []
 let gridClone = []
 let cellNeighbours = []
-
 
 // Cell Object
 function Cell(x,y,alive) {
@@ -55,20 +56,20 @@ function draw() {
 	for(i=0;i<width/cellSize;i++){
 		gridClone[i] = []
 		for(j=0;j<height/cellSize;j++){
-			if(cellGrid[i][j].alive==1){
+			if(cellGrid[i][j].alive==ALIVE){
 				if(cellNeighbours[i][j]<2 || cellNeighbours[i][j]>3){
-					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,0)
+					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,DEAD)
 				}
 				else{
-					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,1)
+					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,ALIVE)
 				}
 			}
-			else if(cellGrid[i][j].alive==0){
+			else if(cellGrid[i][j].alive==DEAD){
 				if(cellNeighbours[i][j]==3){
-					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,1)
+					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,ALIVE)
 				}
 				else{
-					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,0)
+					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,DEAD)
 				}
 			}
 		}
