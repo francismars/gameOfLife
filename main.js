@@ -66,6 +66,7 @@ function resetGame(){
 			cellGrid[i][j].living=0
 		}
 	}	
+	pause=0
 	pauseGame()	
 }
 
