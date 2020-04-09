@@ -22,11 +22,12 @@ function Cell(x,y,living) {
 				ellipse(this.x + range, this.y + range, cellSize-range, cellSize-range)
 			}
 			else {
-				stroke(0)
+				stroke(123)
 				fill(255)				
-				square(this.x,this.y,cellSize,cellSize)
-				fill(0)	
+				square(this.x,this.y,cellSize,cellSize)	
 				if(this.living) { 
+					stroke(0)
+					fill(0)
 					ellipse(this.x + range, this.y + range, cellSize-range, cellSize-range) 
 				}
 			}
