@@ -34,6 +34,7 @@ function Cell(x,y,living) {
 
 //Creates New Empty Grid
 function initiateGrid() {
+	generation = 0
 	for(i=0;i<width/cellSize;i++){
 		cellGrid[i] = []
 		for(j=0;j<height/cellSize;j++){
@@ -70,6 +71,7 @@ function allDead(){
 			cellGrid[i][j].living=0
 		}
 	}	
+	generation = 0
 	pause=0
 	pauseGame()	
 }
