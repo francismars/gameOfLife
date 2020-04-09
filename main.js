@@ -56,11 +56,15 @@ function setup() {
 	
 	buttonReset = createButton("Reset")
 	buttonReset.position(700, 150)
-	buttonReset.mousePressed(resetGame)
+	buttonReset.mousePressed(initiateGrid)
+	
+	buttonReset = createButton("End Life")
+	buttonReset.position(700, 175)
+	buttonReset.mousePressed(allDead)
 }
 
 
-function resetGame(){
+function allDead(){
 	for(i=0;i<width/cellSize;i++){
 		for(j=0;j<height/cellSize;j++){				
 			cellGrid[i][j].living=0
