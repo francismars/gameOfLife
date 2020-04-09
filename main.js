@@ -78,14 +78,10 @@ function mouseClicked() {
 function pauseGame(){
 	if(pause==0){
 		buttonPause.html("Play")
-		pause=1
-		//noLoop()
-		
+		pause=1		
 	} else {
 		buttonPause.html("Pause")
-		pause=0
-		//loop()
-		
+		pause=0		
 	}
 }
 
