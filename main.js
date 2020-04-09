@@ -15,16 +15,20 @@ function Cell(x,y,living) {
 		this.living = living		
 		this.draw = function(){
 			// On Mouse Over
-			if (i*cellSize + range > (mouseX - range) && i*cellSize + range < (mouseX + range) && 
-				j*cellSize + range > (mouseY - range) && j*cellSize + range < (mouseY + range)) {
-				stroke(255)
-				cellGrid[i][j].living ? fill(123) : fill(123)			
-				square(i*cellSize,j*cellSize,cellSize,cellSize)
+			if (this.x + range > (mouseX - range) && this.x + range < (mouseX + range) && 
+				this.y + range > (mouseY - range) && this.y + range < (mouseY + range)) {
+				stroke(0)
+				this.living ? fill(255) : fill(0)			
+				ellipse(this.x + range, this.y + range, cellSize-range, cellSize-range)
 			}
 			else {
 				stroke(0)
-				this.living ? fill(255) : fill(0)			
+				fill(255)				
 				square(this.x,this.y,cellSize,cellSize)
+				fill(0)	
+				if(this.living) { 
+					ellipse(this.x + range, this.y + range, cellSize-range, cellSize-range) 
+				}
 			}
 		}
 		this.flip = function() {
