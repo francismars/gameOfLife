@@ -1,12 +1,15 @@
 const cellSize = 10
-const DEAD = 0
 const ALIVE = 1
-let range=cellSize/2
+const DEAD = 0
+let dragStatus = 0
+let generation = 0
+let range = cellSize/2
 let cellGrid = []
 let gridClone = []
 let cellNeighbours = []
-let pause = 0
-let generation = 0
+let pause = false
+let locked = false
+
 
 // Cell Object
 function Cell(x,y,living) {
@@ -70,30 +73,45 @@ function setup() {
 }
 
 
+// End All Life
 function allDead(){
 	for(i=0;i<width/cellSize;i++){
 		for(j=0;j<height/cellSize;j++){				
-			cellGrid[i][j].living=0
+			cellGrid[i][j].living = DEAD
 		}
 	}	
 	generation = 0
-	pause=0
+	pause = false
 	pauseGame()	
 }
 
-function mouseClicked() {
+function mousePressed() {
 	if(mouseX<width && mouseY<height){
-		cellGrid[Math.floor(mouseX/cellSize)][Math.floor(mouseY/cellSize)].flip()		
+		cellGrid[Math.floor(mouseX/cellSize)][Math.floor(mouseY/cellSize)].flip()
+		locked = true
+		dragStatus = cellGrid[Math.floor(mouseX/cellSize)][Math.floor(mouseY/cellSize)].living
 	}
 }
 
+function mouseReleased() {
+  locked = false;
+}
+
+function mouseDragged() {
+  if (locked) {
+	if(mouseX<width && mouseY<height){
+		cellGrid[Math.floor(mouseX/cellSize)][Math.floor(mouseY/cellSize)].living = dragStatus
+	}
+  }
+}
+
 function pauseGame(){
-	if(pause==0){
+	if(!pause){
 		buttonPause.html("Play")
-		pause=1		
+		pause = true		
 	} else {
 		buttonPause.html("Pause")
-		pause=0		
+		pause = false		
 	}
 }
 
@@ -122,7 +140,7 @@ function newGeneration() {
 		}
 	}
 	generation++
-	textGeneration.html('Generation: '+generation)
+	textGeneration.html('Generation: '+ generation)
 	cellGrid = gridClone
 	gridClone = []
 }
