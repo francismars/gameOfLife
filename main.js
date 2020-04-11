@@ -1,11 +1,10 @@
 const cellSize = 10
+const range = cellSize/2
 const ALIVE = 1
 const DEAD = 0
 let dragStatus = 0
 let generation = 0
-let range = cellSize/2
 let cellGrid = []
-let gridClone = []
 let cellNeighbours = []
 let pause = false
 let locked = false
@@ -117,6 +116,7 @@ function pauseGame(){
 
 // Creates Next Generation
 function newGeneration() {
+	let gridClone = []
 	for(i=0;i<width/cellSize;i++){
 		gridClone[i] = []
 		// Rules Of The Game
@@ -142,7 +142,6 @@ function newGeneration() {
 	generation++
 	textGeneration.html('Generation: '+ generation)
 	cellGrid = gridClone
-	gridClone = []
 }
 
 // Check Number of Neighbours per Cell
@@ -150,7 +149,7 @@ function checkNeighbours() {
 	for(i=0;i<width/cellSize;i++){
 		cellNeighbours[i] = []
 		for(j=0;j<height/cellSize;j++){
-			cellNeighbours[i][j] = 0
+			cellNeighbours[i][j] = -cellGrid[i][j].living
 			for(k=-1;k<=1;k++){
 				for(l=-1;l<=1;l++){
 					neighbourX = ((i-k)+cellGrid.length) % cellGrid.length
@@ -158,7 +157,6 @@ function checkNeighbours() {
 					cellNeighbours[i][j] += cellGrid[neighbourX][neighbourY].living
 				}
 			}
-			cellNeighbours[i][j] -= cellGrid[i][j].living
 		}
 	}
 }
