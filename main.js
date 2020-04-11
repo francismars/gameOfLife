@@ -1,11 +1,9 @@
 const cellSize = 10
-const range = cellSize/2
 const ALIVE = 1
 const DEAD = 0
 let dragStatus = 0
 let generation = 0
 let cellGrid = []
-let cellNeighbours = []
 let pause = false
 let locked = false
 
@@ -17,6 +15,7 @@ function Cell(x,y,living) {
 		this.living = living		
 		this.draw = function(){
 			// On Mouse Over
+			const range = cellSize/2
 			if (this.x + range > (mouseX - range) && this.x + range < (mouseX + range) && 
 				this.y + range > (mouseY - range) && this.y + range < (mouseY + range)) {
 				stroke(0)
@@ -115,14 +114,14 @@ function pauseGame(){
 }
 
 // Creates Next Generation
-function newGeneration() {
+function newGeneration(neighboursGrid) {
 	let gridClone = []
 	for(i=0;i<width/cellSize;i++){
 		gridClone[i] = []
 		// Rules Of The Game
 		for(j=0;j<height/cellSize;j++){
 			if(cellGrid[i][j].living==ALIVE){
-				if(cellNeighbours[i][j]<2 || cellNeighbours[i][j]>3){
+				if(neighboursGrid[i][j]<2 || neighboursGrid[i][j]>3){
 					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,DEAD)
 				}
 				else{
@@ -130,7 +129,7 @@ function newGeneration() {
 				}
 			}
 			else if(cellGrid[i][j].living==DEAD){
-				if(cellNeighbours[i][j]==3){
+				if(neighboursGrid[i][j]==3){
 					gridClone[i][j] = new Cell(i*cellSize,j*cellSize,ALIVE)
 				}
 				else{
@@ -140,12 +139,13 @@ function newGeneration() {
 		}
 	}
 	generation++
-	textGeneration.html('Generation: '+ generation)
+	textGeneration.html(`Generation: ${generation}`)
 	cellGrid = gridClone
 }
 
 // Check Number of Neighbours per Cell
 function checkNeighbours() {	
+	let cellNeighbours = []
 	for(i=0;i<width/cellSize;i++){
 		cellNeighbours[i] = []
 		for(j=0;j<height/cellSize;j++){
@@ -159,18 +159,19 @@ function checkNeighbours() {
 			}
 		}
 	}
+	return cellNeighbours
 }
 
 function draw() {
 	// Draw all Cells
 	for(i=0;i<width/cellSize;i++){
 		for(j=0;j<height/cellSize;j++){
-			cellGrid[i][j].draw()			
+			cellGrid[i][j].draw()
 		}
 	}
 	if(!pause){
-		checkNeighbours()	
-		newGeneration()		
+		neighboursGrid = checkNeighbours()	
+		newGeneration(neighboursGrid)		
 	}
 
 }
