@@ -12,4 +12,4 @@ The game is a zero-player game, meaning that its evolution is determined by its 
 - Random Initial State 
 - Draw your own Initial State
 
-Live Demo: https://francisconlm.github.io/gameOfLife/
+Live Demo: https://francismars.github.io/gameOfLife/
